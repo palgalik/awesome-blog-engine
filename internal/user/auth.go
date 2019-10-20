@@ -1,10 +1,9 @@
-package auth
+package user
 
 import (
 	"encoding/json"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/galikpali/awesome-blog-engine/internal/config"
-	"github.com/galikpali/awesome-blog-engine/internal/user"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -30,7 +29,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userEntity := user.FindByEmail(credentials.Email)
+	userEntity := findByEmail(credentials.Email)
 
 	if !checkPasswordHash(credentials.Password, userEntity.PasswordHash) {
 		w.WriteHeader(http.StatusBadRequest)
